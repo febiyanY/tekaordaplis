@@ -1,0 +1,13 @@
+export const LOAD_INGREDIENT = 'LOAD_INGREDIENT'
+export const ADD_INGREDIENT = 'ADD_INGREDIENT'
+export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT'
+
+export const LOAD_ORDERS = 'LOAD_ORDERS'
+
+export const SHOW_LOADER = 'SHOW_LOADER'
+export const HIDE_LOADER = 'HIDE_LOADER'
+
+export const AUTH_START = 'AUTH_START'
+export const AUTH_SUCCESS = 'AUTH_SUCCESS'
+export const AUTH_FAIL = 'AUTH_FAIL'
+export const AUTH_LOGOUT = 'AUTH_LOGOUT'
