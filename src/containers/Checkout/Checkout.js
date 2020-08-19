@@ -1,44 +1,39 @@
-import React, { Component } from 'react'
+import React, { useCallback } from 'react'
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
 import { Route, Redirect } from 'react-router-dom'
 import ContactData from './ContactData/ContactData'
-import {connect} from 'react-redux'
+import {useSelector} from 'react-redux'
 
-class Checkout extends Component {
+const Checkout = props => {
+    const ingredients = useSelector(state => state.burgerBuilder.ingredients)
 
+    const handleProceed = useCallback(() => {
+        props.history.replace(`${props.match.url}/contact-data`)
+    },[props.history, props.match.url])
 
-    handleProceed = () => {
-        this.props.history.replace(`${this.props.match.url}/contact-data`)
-    }
-
-    handleCancel = () => {
-        this.props.history.goBack()
-    }
-
-    render() {
-        let page = <Redirect to="/" />
-        if (this.props.ingredients) {
-            page = (
-                <div>
-                    <CheckoutSummary ingredients={this.props.ingredients} proceed={this.handleProceed} cancel={this.handleCancel} />
-                    <Route path={`${this.props.match.url}/contact-data`}
-                        component={ContactData}
-                        // render={(props) => <ContactData ingredients={this.state.ingredients} totalPrice={this.state.totalPrice} {...props} />}
-                    />
-                </div>
-            )
-        }
-        return (
-            <React.Fragment>
-                {page}
-            </React.Fragment>
-
+    const handleCancel = useCallback(() => {
+        props.history.goBack()
+    },[props.history])
+    
+    let page = <Redirect to="/" />
+    if (ingredients) {
+        page = (
+            <div>
+                <CheckoutSummary ingredients={ingredients} proceed={handleProceed} cancel={handleCancel} />
+                <Route path={`${props.match.url}/contact-data`}
+                    component={ContactData}
+                    // render={(props) => <ContactData ingredients={this.state.ingredients} totalPrice={this.state.totalPrice} {...props} />}
+                />
+            </div>
         )
     }
+    return (
+        <React.Fragment>
+            {page}
+        </React.Fragment>
+
+    )
 }
 
-const mapStateToProps = state => ({
-    ingredients : state.burgerBuilder.ingredients
-})
 
-export default connect(mapStateToProps)(Checkout)
+export default Checkout
