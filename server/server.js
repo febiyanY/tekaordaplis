@@ -6,7 +6,7 @@ const publicPath = path.join(__dirname, '../build')
 const PORT = process.env.PORT || 3000
 app.use(express.static(publicPath))
 
-app.all("*", (req,res) => res.sendFile(publicPath, 'index.html'))
+app.all("*", (req,res) => res.sendFile(path.join(publicPath, 'index.html')))
 
 app.listen(PORT, () => {
     console.log('Listening on port', PORT)
